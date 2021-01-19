@@ -14,9 +14,11 @@ type
   end;
   PExhaleEncAPI = ^TExhaleEncAPI;
 
+  TExhaleVariableBitrate = Integer;
+
 {$IFDEF DynLink}
   // static linking
-  TExhaleCreate = function (const inputPcmData: PInteger; const PByte; const outputAuData: PByte; const SampleRate: Cardinal; const numChannels: Cardinal; const frameLength: Cardinal; const indepPeriod: Cardinal; const varBitRateMode: Boolean; const useNoiseFill: Boolean): PExhaleEncAPI; cdecl;
+  TExhaleCreate = function (const inputPcmData: PInteger; const outputAuData: PByte; const SampleRate: Cardinal; const numChannels: Cardinal; const frameLength: Cardinal; const indepPeriod: Cardinal; const varBitRateMode: TExhaleVariableBitrate; const useNoiseFill: Boolean): PExhaleEncAPI; cdecl;
   TExhaleDelete = function (const ExhaleEncAPI: PExhaleEncAPI): Cardinal; cdecl;
   TExhaleInitEncoder = function (const ExhaleEncAPI: PExhaleEncAPI; const audioConfigBuffer: PByte; const audioConfigBytes: PCardinal): Cardinal; cdecl;
   TExhaleEncodeLookahead = function (const ExhaleEncAPI: PExhaleEncAPI): Cardinal; cdecl;
@@ -31,7 +33,7 @@ var
 
 {$ELSE}
   // static linking
-  function ExhaleCreate(const inputPcmData: PInteger; const PByte; const outputAuData: PByte; const SampleRate: Cardinal; const numChannels: Cardinal; const frameLength: Cardinal; const indepPeriod: Cardinal; const varBitRateMode: Boolean; const useNoiseFill: Boolean): PExhaleEncAPI; cdecl; external CLibExhale name 'exhaleCreate ';
+  function ExhaleCreate(const inputPcmData: PInteger; const outputAuData: PByte; const SampleRate: Cardinal; const numChannels: Cardinal; const frameLength: Cardinal; const indepPeriod: Cardinal; const varBitRateMode: TExhaleVariableBitrate; const useNoiseFill: Boolean): PExhaleEncAPI; cdecl; external CLibExhale name 'exhaleCreate';
   function ExhaleDelete(const ExhaleEncAPI: PExhaleEncAPI): Cardinal; cdecl; external CLibExhale name 'exhaleDelete';
   function ExhaleInitEncoder(const ExhaleEncAPI: PExhaleEncAPI; const audioConfigBuffer: PByte; const audioConfigBytes: PCardinal): Cardinal; cdecl; external CLibExhale name 'exhaleInitEncoder';
   function ExhaleEncodeLookahead(const ExhaleEncAPI: PExhaleEncAPI): Cardinal; cdecl; external CLibExhale name 'exhaleEncodeLookahead';
