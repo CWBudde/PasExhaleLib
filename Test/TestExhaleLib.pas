@@ -51,8 +51,8 @@ begin
   Assert(SizeOf(TExhaleVariableBitrate) = 4);
 
   // get buffer for one second
-  GetMem(InputData, 44100 * SizeOf(Integer));
-  GetMem(OutputData, 768 * SizeOf(Integer));
+  GetMem(InputData, 1024 * SizeOf(Integer));
+  GetMem(OutputData, 768 * SizeOf(Byte));
 
   Handle := ExhaleCreate(InputData, OutputData, 44100, 1, 1024, 45, 4, True);
 
